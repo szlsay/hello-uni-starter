@@ -25,8 +25,8 @@
 <script>
 	import {
 		validator
-	} from '../../js_sdk/validator/opendb-feedback.js';
-	console.log(validator);
+	} from '../../js_sdk/validator/opendb-feedback.js';	
+	import { store } from '@/uni_modules/uni-id-pages/common/store.js'
 	const db = uniCloud.database();
 	const dbCollectionName = 'opendb-feedback';
 
@@ -74,7 +74,13 @@
 				})
 			},
 
-			submitForm(value) {
+			async submitForm(value) {
+				// const res = await uniCloud.getCurrentUserInfo()
+				// console.log(res);
+				// console.log(store.userInfo);
+				const user_id = store.userInfo._id
+				value.user_id = user_id
+				// return
 				// 使用 clientDB 提交数据
 				db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({
